@@ -1,9 +1,13 @@
-setwd("C:/Users/PI CONSULTING/Documents/NICAR 2018")
+setwd("~/Documents/NICAR 2018")
 library(tidyverse)
 library(lubridate)
 
 # load and view ca medical board disciplinary actions data
 (ca_discipline <- read_csv("ca_discipline.csv"))
+# load and View opioid prescription data
+ca_opioids <- read_csv("ca_medicare_opioids.csv")
+# load and view license data
+npi_license <- read_csv("npi_license.csv")
 
 # look at types of disciplinary actions
 (types <- ca_discipline %>% select(action_type) %>% unique())
@@ -44,3 +48,7 @@ revoked_ca_year <- ca_discipline %>% filter(action_type == "Revoked" & state == 
 # license revokations for doctors based in California, by month for year not 2008/ can also use
 # year >= 2009
 (revoked_ca_month <- ca_discipline %>% filter(action_type == "Revoked"  & state == "CA" & year != 2008) %>%group_by(month) %>% summarize(revocations = n()))
+# Create a summary, showing the number of opioid prescriptions written by each provider, the total cost of the opioids prescribed, and the cost per claim
+(provider_summary <- ca_opioids %>%  group_by(npi,nppes_provider_last_org_name,nppes_provider_first_name,nppes_provider_city,specialty_description) %>% summarize(prescriptions = sum(total_claim_count),
+    cost = sum(total_drug_cost)) %>% mutate(cost_per_prescription = cost/prescriptions) %>%
+    arrange(desc(prescriptions)))
