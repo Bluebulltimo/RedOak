@@ -1,4 +1,4 @@
-setwd("C:/Users/PI CONSULTING/Documents/NICAR 2018")
+setwd("~/Documents/NICAR 2018")
 library(tidyverse)
 library(lubridate)
 
