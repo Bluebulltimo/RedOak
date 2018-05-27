@@ -29,12 +29,12 @@ names(ca_discipline)[colSums(is.na(ca_discipline)) > 0]
 (revoked <- ca_discipline %>% filter(action_type == "Revoked"))
 
 # doctors in Berkeley or Oakland who have had their licenses revoked 
-<<<<<<< HEAD
+
 (revoked_oak_berk1 <- ca_discipline %>% filter(action_type == "Revoked" & 
 	(city == "Oakland" | city == "Berkeley")))
-=======
+
 (revoked_oak_berk1 <- ca_discipline %>% filter(action_type == "Revoked" & (city == "Oakland" | city == "Berkeley")))
->>>>>>> dd70c459e5e9abee236ae3539ed6d3d92957bd1e
+
 
 
 #Append data using bind_rows
@@ -56,7 +56,7 @@ write_csv(revoked_oak_berk, "revoked_oak_berk.csv", na = "")
 (ca_discipline <- ca_discipline %>% mutate(year = year(action_date), month = month(action_date)))
 
 # license revokations for doctors based in California, by year
-<<<<<<< HEAD
+
 (revoked_ca_year <- ca_discipline %>% filter(action_type == "Revoked" & state == "CA") 
 	%>% group_by(year) %>% summarize(revocations = n()))
 # license revokations for doctors based in California, by month for year not 2008/can 
